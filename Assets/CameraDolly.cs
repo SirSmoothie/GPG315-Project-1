@@ -6,14 +6,34 @@ using UnityEngine.UIElements;
 
 public class CameraDolly : MonoBehaviour
 {
-    public GameObject rail1;
-    public GameObject rail2;
-    public GameObject rail3;
-    public GameObject rail4;
-    public float sphereThickness = 0.1f;
-    public float noOfPoints = 0.1f;
+    [HideInInspector] public GameObject rail1;
+    [HideInInspector] public GameObject rail2;
+    [HideInInspector] public GameObject rail3;
+    [HideInInspector] public GameObject rail4;
+    [Range(0.001f, 1f)]
+    [Tooltip("0.5 for a smooth curve. 1 for a direct path from Start to End.")]
+    private float noOfPoints = 0.05f;
     public void ActivateDolly(Camera camera)
     {
+        if (camera == null) { Debug.Log("WARNING: Camera was not assigned or sent to the CameraDolly."); }
+        if (camera.gameObject.GetComponent<CameraDollyController>() == null) { Debug.Log("WARNING: Camera has not been assigned the CameraDollyController script."); }
+        camera.gameObject.GetComponent<CameraDollyController>().ActivateDolly(gameObject);
+    }
+
+    public void ActivatePOFDolly(Camera camera)
+    {
+        if (camera == null) { Debug.Log("WARNING: Camera was not assigned or sent to the CameraDolly."); }
+        if (camera.gameObject.GetComponent<CameraDollyController>() == null) { Debug.Log("WARNING: Camera has not been assigned the CameraDollyController script."); }
+        camera.gameObject.GetComponent<CameraDollyController>().ActivatePointOfFocusDolly(gameObject);
+    }
+
+    public Vector3 GetCameraDollyPosition(float cameraTime)
+    {
+        Vector3 cameraPosition = Mathf.Pow(1 - cameraTime, 3) * rail1.transform.position +
+                                 3 * Mathf.Pow(1 - cameraTime, 2) * cameraTime * rail2.transform.position +
+                                 3 * (1 - cameraTime) * Mathf.Pow(cameraTime, 2) * rail3.transform.position +
+                                 Mathf.Pow(cameraTime, 3) * rail4.transform.position;
+        return cameraPosition;
         
     }
     public void NewRailObjects(GameObject tempRail1, GameObject tempRail2, GameObject tempRail3, GameObject tempRail4)
@@ -38,6 +58,10 @@ public class CameraDolly : MonoBehaviour
             //Gizmos.DrawSphere(gizmosPosition, sphereThickness);
             Gizmos.DrawLine(gizmosPositionLastPos, gizmosPosition);
             gizmosPositionLastPos = gizmosPosition;
+            if (i >= 1)
+            {
+                Gizmos.DrawLine(gizmosPositionLastPos, rail4.transform.position);
+            }
         }
         Gizmos.color = Color.green;
         Gizmos.DrawLine(rail1.transform.position, rail2.transform.position);

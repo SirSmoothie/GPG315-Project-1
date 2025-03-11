@@ -43,5 +43,25 @@ public class CameraRig : EditorWindow
             //}
 
         }
+        GUILayout.Space(10);
+        if (GUILayout.Button("Create CameraRail SemiCircle"))
+        {
+            
+        }
+        GUILayout.Space(10);
+        if (GUILayout.Button("Create CameraRail Circle"))
+        {
+            
+        }
+        GUILayout.Space(10);
+        if (GUILayout.Button("Save CameraRail"))
+        {
+            
+        }
+        GUILayout.Space(10);
+        if (GUILayout.Button("Load CameraRail"))
+        {
+            
+        }
     }
 }
