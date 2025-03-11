@@ -53,7 +53,6 @@ public class CameraDolly : MonoBehaviour
                              3 * Mathf.Pow(1 - i, 2) * i * rail2.transform.position +
                              3 * (1 - i) * Mathf.Pow(i, 2) * rail3.transform.position + Mathf.Pow(i,3) * rail4.transform.position;
             
-            //Gizmos.DrawSphere(gizmosPosition, sphereThickness);
             Gizmos.DrawLine(gizmosPositionLastPos, gizmosPosition);
             gizmosPositionLastPos = gizmosPosition;
             if (i >= 1)
