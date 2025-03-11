@@ -10,9 +10,7 @@ public class CameraDolly : MonoBehaviour
     [HideInInspector] public GameObject rail2;
     [HideInInspector] public GameObject rail3;
     [HideInInspector] public GameObject rail4;
-    [Range(0.001f, 1f)]
-    [Tooltip("0.5 for a smooth curve. 1 for a direct path from Start to End.")]
-    private float noOfPoints = 0.05f;
+    private float noOfPoints = 0.01f;
     public void ActivateDolly(Camera camera)
     {
         if (camera == null) { Debug.Log("WARNING: Camera was not assigned or sent to the CameraDolly."); }
